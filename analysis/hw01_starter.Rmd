@@ -1,69 +1,31 @@
 ---
-title: "DATA-413/613 HW 1"
+title: "DATA-413/613 HW 01"
 author: "Your Name"
 date: "`r Sys.Date()`"
 output:
   html_document: 
     number_sections: true
-editor_options:
-  chunk_output_type: inline
-urlcolor: blue
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-                      fig.align  = "center",
-                      fig.height = 4, 
-                      fig.width  = 6)
-```
 
 # Instructions {-}
 Complete both the Admin elements and the Analysis Elements of this assignment.
-
-## Admin elements:  {-}
-1. Upload a photo (headshot) of yourself into your canvas profile  
-2. Review the Syllabus and the [academic integrity code](<https://www.american.edu/policies/students/upload/academic-integrity-code-2020.pdf>).  
-3. If not already complete, fill in your information in the Student Info spreadsheet under the Canvas Collaboration site.  
-
-## Analysis Elements: {-}
-Rename the starter file under the analysis directory as `hw01_yourname.Rmd` and use it for your solutions.   
-1. Modify the "author" field in the YAML header.  
-2. Stage and commit R Markdown and HTML files (no PDF files).   
-3. **Push both .Rmd and HTML files to GitHub**.   
-  - Make sure you have knitted to HTML prior to staging, committing, and pushing your final submission.  
-4. **Commit each time you answer a part of question, e.g. 1.1**   
-5. **Push to GitHub after each major question**, e.g., College Scorecard and World Bank Data     
-  - **Committing and Pushing are graded elements for this homework.**  
-6. When complete, submit a response in Canvas that you have completed the homework. No need to submit your files.  
-    
-- Only include necessary code to answer the questions.
-- Most of the functions you use should be from the tidyverse. Too much base R will result in point deductions.
-- Use pull requests and or email to ask me any questions. If you email, ensure your most recent code is pushed to GitHub whether it is working or not.
-
-# Learning Outcomes:  {-}
-- Operate with Git and GitHub.
-- Apply concepts and methods from DATA-412/612.   
-
-# Grading Criteria {-}
-See html document
-
 
 # Canvas Picture, Syllabus, and Student Info
 Review the Syllabus on Canvas and answer the following questions:
 
 I, *enter your name*  have:
 
-1. Added a photo of myself (headshot) to my Canvas profile
+1. Ensured my Canvas Profile has a photo of me (head and shoulders)
 
-2. Reviewed the syllabus and the associated policies on the following date: _____________
+2. Reviewed the syllabus and the associated policies on the following date: ___fill in the date__________
 
-3. Reviewed the American University policies on academic integrity, and understand how they apply to this course and  agree to comply with them for this course
+3. Reviewed the American University policies on academic integrity and agree to comply with them and the additional guidance in the syllabus for this course
 
-4. Completed my information in the Student Info spreadsheet on Canvas collaborations
+4. Confirmed my information in the Student Info spreadsheet on Canvas collaborations is correct.
 
 # College Scorecard
 
-The data folder contains "college_scorecard_extract_ 2021-01-19.csv", a subset of the data in the [College Scorecard](https://collegescorecard.ed.gov/data/) database as of January 19, 2021. These data contain information on colleges in the United States. The variables include:
+The data folder contains "college_scorecard_extract_ 2021-08-03.csv", a subset of the data in the [College Scorecard](https://collegescorecard.ed.gov/data/) database as of August 03, 2021. These data contain information on college cohorts in the United States. The variables include:
 
 - `UNITID` and `OPEID`: Identifiers for the colleges.
 - `INSTNM`: Institution name
@@ -80,41 +42,42 @@ The data folder contains "college_scorecard_extract_ 2021-01-19.csv", a subset o
 - `FEMALE`: Share of female students
 - `PCT_WHITE`: Percent of the population from students' zip codes that is White, via Census data
 
-1. Use a relative path and a readr function to load the data from data/college_score_200601.csv into a tibble. Note, this data uses NULL instead of `NA` so convert NULL to `NA` while reading in.
-
+1. Use a relative path and a {readr} function to load the data from data/college_scorecard_extract_2021-08-03.csv into a tibble. Note, this data uses NULL instead of `NA` so convert NULL to `NA` while reading in. Do not not suppress messages or warnings.
+   
 2. If you used the default settings for reading in the data, multiple variables are probably type character when they should be numeric. 
   + Which ones? 
   + Why were they read in as type character? 
-  
-3. Use a readr function to fix these variables to be numeric and save the updated tibble.
 
-4. How is average faculty salary associated with the median earnings of students ten years after initial enrollment? 
+3. Reload the data with a {readr} function and use an argument so the variables are read in as numeric.
 
-  - Choose response and explanatory variables based on a reasonable hypothesis. 
-  - Create an appropriate plot to assess for a linear relationship with smoother
-  - Use a ggplot2 function to try to reduce overplotting.
-  - Interpret the plot to justify your answer. 
+4. How is average faculty salary associated with the average earnings of students ten years after initial enrollment? 
+
+  - State the question you are trying to answer based on your choice of response and explanatory variables. 
+  - Create an appropriate plot to assess for a relationship.
+  - Use a {ggplot2} function to reduce overplotting.
+  - Use the default smoother. Explain why ggplot2 chose the method.
+  - Interpret the plot to answer your question. 
 
 5. Does the level of the institution seem to be associated with the median earnings of students ten years after enrollment? 
 
   - Reproduce this plot in R to explore this relationship 
   - Interpret the plot
-   
+
 6. Plot the median earnings 10 years after enrollment for level 1 institutions as the Y axis against PCT_WHITE and, in a second plot, against FEMALE.  
 
   - Use a log scale as appropriate.
   - Add a loess smoother. 
   - Describe and interpret the non-linear relationship in each of the plots.
 
-7. Create a scatter plot of the mean earnings 10 years after enrollment (Y) axis) compared to the median earnings 10 years after enrollment (X axis) using log scales for both.  
-  + Add an abline. 
+7. Create a scatter plot of the mean earnings 10 years after enrollment (Y axis) compared to the median earnings 10 years after enrollment (X axis) using log scales for both.  
+  + Add a 45 degree abline. 
   + Use color to differentiate the level of institutions and attempt to reduce effects of overplotting.
-  + Interpret the plot and the relationship between the two variables.
+  + Interpret the plot and the relationship between the two variables considering the abline.
 
-8. Compute a ranking of level 1 universities based on the ratio of median earnings 10 years after enrollment compared to median graduation debt.   
-  + Identify the top 5 best (highest ROI should be #1 ) and the bottom 5 worst 
-  + What is American University's rank and ROI? 
-   
+8. Use a {dplyr} function to compute a ranking of level 1 universities based on the ratio of median earnings 10 years after enrollment compared to median graduation debt for those schools that have both data elements. Break any ties using the minimum value such that if two schools are tied for 4th, they are each ranked 4 and the next school is 6.
+  + Identify the top 5 best (highest ROI should be #1 ) and the bottom 5 worst. Show only their rank, name, ROI, cost, debt, and earnings. 
+  + What is American University's rank and ROI? Show only the rank, name, ROI, cost, debt, and earnings? 
+
 - Extra Credit: 
   + Reproduce the following plot so the *AU line and number of institutions automatically adjusts as new data is entered*:
   + What is AU's new ranking and ROI if the mean earnings are used?
@@ -144,23 +107,26 @@ The World Bank provides loans to countries with the goal of reducing poverty. Th
 1. Use relative paths and a readr function to load these files into four tibbles.  
 
 2. These data are messy. The observational units in `fert`, `life`, and `pop` are locations in space-time (e.g. Aruba in 2017). Recall tidy data should have one observational unit per row.  
-  - Use tidyr functions to tidy these three tibbles and save the updated data frames.
-  - Use an argument so the readr function ensures the variable for `year` is a numeric.  
+  - Use {tidyr} functions to tidy these three tibbles and save the updated data frames.
+  - Use an argument so the {tidyr} function ensures the variable for `year` is a numeric.  
 
-3. Use dplyr functions to combine the three tibbles into one and save to a new tibble which includes the fertility rate, population, and life expectancy in each year as well as the region for each country.
+3. Use {dplyr} functions to join the three tibbles into one and save to a new tibble which includes the fertility rate, population, and life expectancy in each year as well as the region for each country.
 
 4. Make a scatterplot of fertility rate vs life expectancy, color-coding by region and annotating size by the population.  
   + Include only the years 1960, 1970, 1980, 1990, 2000, and 2010. 
   + Facet by these years.
   + Your final plot should look like this (Each element of the formatting is graded):
   + **Interpret the plot in one sentence**.
- 
+
 5. Calculate the total population for each region for each year.  
   + Exclude 2018.  
   + Make a line plot of year versus total population, color-coding by region and using a log scale.
   + Your final plot should look like this:
   + **Interpret the plot in one sentence to identify the two fastest growing regions**.
-   
-6. Make a bar plot of population vs region for the year 2010.  
-  + Order the bars on the $y$-axis in **increasing** order of population. 
+
+6. Make a box plot of percentage population growth vs region between 1960 and 2010.  
+  + Order the Regions on the $y$-axis in **increasing** order of total 1960 population. 
+  + For any countries with negative growth set to .001.
+  + Add a red line at 100%
   + Your final plot should look like this:
+  + **Interpret the plot in one sentence to compare the percentage growth with the previous plot.**
