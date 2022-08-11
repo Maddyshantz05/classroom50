@@ -132,23 +132,23 @@ The data folder contains "college_scorecard_extract_2022-04-20.csv", a *subset* 
 
 The World Bank provides loans to countries with the goal of reducing poverty. The dataframes in the data folder were taken from the public data repositories of the [World Bank](https://data.worldbank.org/).
 
--   `country_2021.csv`: Contains information on the countries in the data set. The variables are:
-    -   `Country_Code`: A three-letter code for the country. Note not all rows are countries; some are regions.
-    -   `Region`: The region of the country.
-    -   `IncomeGroup`: Either `"High income"`, `"Upper middle income"`, `"Lower middle income"`, or `"Low income"`.
-    -   `TableName`: The full name of the country.
+-   `country_2021.csv`: Contains information on the countries in the data set. Also includes totals for the regions (sets of countries) and the world. The variables are:
+    -   `Country_Code`: A three-letter code for the country. Note not all rows are countries; There are rows for the regions and for the world.
+    -   `Region`: The region of the country. **Take note: Region is `NA` for the individual regions and for the world.**
+    -   `IncomeGroup`: Either `"High income"`, `"Upper middle income"`, `"Lower middle income"`, or `"Low income"`. Take note: Region is `NA` for the individual regions and for the world.
+    -   `TableName`: The full name of the country or region.
     -   `Special Notes`: Notes about the country or region
--   `fertility_rate_2020.csv`: Contains the fertility rate information for each country for each year.
+-   `fertility_rate_2020.csv`: Contains the fertility rate information for each country, each region, and the world for each year.
     -   For the variables `1960` to `2020`, the values in the cells represent the fertility rate in total births per woman for that year.
     -   Total fertility rate represents the number of children that would be born to a woman if she were to live to the end of her childbearing years and bear children in accordance with age-specific fertility rates of the specified year.
--   `life_expectancy_2020.csv`: Contains the life expectancy information for each country for each year.
+-   `life_expectancy_2020.csv`: Contains the life expectancy information for each country, each region, and the world for each year.
     -   For the variables `1960` to `2020`, the values in the cells represent life expectancy at birth in years for the given year.
     -   Life expectancy at birth indicates the number of years a newborn infant would live if prevailing patterns of mortality at the time of its birth were to stay the same throughout its life.
--   `population_2021.csv`: Contains the population information for each country.
+-   `population_2021.csv`: Contains the population information for each country, each region, and the world for the year.
     -   For the variables `1960` to `2021`, the values in the cells represent the total population in number of people for the given year.
     -   Total population is based on the *de facto* definition of population, which counts all residents regardless of legal status or citizenship. The values shown are mid-year estimates.
 
-1.  Use relative paths and a readr function to load these files into four tibbles.
+1.  Use a relative path and a {readr} function to load each of these four files into its own tibble.
 
 
 2.  These data are messy. The observational units in `fert`, `life`, and `pop` are locations in space-time (e.g. Aruba in 2020). Recall that tidy data should have one observational unit per row. Using only two function calls for each data frame, tidy each data frame to have only four variables by:
