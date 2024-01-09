@@ -56,7 +56,7 @@ The data folder contains "college_scorecard_extract_2023-04-25_UG.csv", a *subse
 -   `UGDS_NHPI`: Percent of Native Hawaiian/Pacific Islander undergraduates
 
 1.  Load the data.
-    1.  Use a relative path and one call to a {readr} function to load the file `data/college_scorecard_extract_2022-04-20.csv` and save the resulting tibble. Note, this data uses "NULL" instead of `NA`. As part of loading the data, use an argument of the {readr} function you chose to convert "NULL" to `NA`. Do not not suppress messages or warnings.
+    1.  Use a relative path and one call to a {readr} function to load the file `college_scorecard_extract_2023-04-25_UG.csv` and save the resulting tibble. Note, this data uses "NULL" instead of `NA`. As part of loading the data, use an argument of the {readr} function you chose to convert "NULL" to `NA`. Do not not suppress messages or warnings.
     2.  Use `glimpse()` to examine the data.
 
 
