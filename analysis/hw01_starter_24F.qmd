@@ -115,7 +115,7 @@ c.  What are the ethical implications of using either the linear smoother or the
 
 a.  Filter the data to only l`ICLEVEL` 1 with no `NA`s for `COSTT4_A` or `GRAD_DEBT_MDN`. Also remove any satellite campuses using `filter(str_detect(OPEID, "......00"))`. That should leave 1,701 rows.
 
-b.  Add a variable called `DCR` based on the ratio of median earnings 10 years after enrollment to median graduation debt at graduation.
+b.  Add a variable called `DCR` based on the ratio of median graduation debt at graduation to Average cost of attendance (academic year institutions).
 
 c.  Use a {dplyr} integer ranking function to compute a ranking using `DCR`. Break any ties using the smallest value and leaving a gap to the next untied DCR such that if two schools are tied for 4th, they are each ranked 4 and the next school is 6. This is similar to many sports rankings.
 

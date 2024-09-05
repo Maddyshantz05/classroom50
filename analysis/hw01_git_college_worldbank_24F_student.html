@@ -3784,7 +3784,7 @@ window.Quarto = {
 </ol>
 <ol type="a">
 <li><p>Filter the data to only <code>ICLEVEL</code> 1 with no <code>NA</code>s for <code>COSTT4_A</code> or <code>GRAD_DEBT_MDN</code>. Also remove any satellite campuses using <code>filter(str_detect(OPEID, &quot;......00&quot;))</code>. That should leave 1,701 rows.</p></li>
-<li><p>Add a variable called <code>DCR</code> based on the ratio of median earnings 10 years after enrollment to median graduation debt at graduation.</p></li>
+<li><p>Add a variable called <code>DCR</code> based on the ratio of median graduation debt at graduation to the Average cost of attendance (academic year institutions).</p></li>
 <li><p>Use a {dplyr} integer ranking function to compute a ranking using <code>DCR</code>. Break any ties using the smallest value and leaving a gap to the next untied DCR such that if two schools are tied for 4th, they are each ranked 4 and the next school is 6. This is similar to many sports rankings.</p></li>
 <li><p>Identify the top 5 best (lowest DCR should be rank value 1) and the bottom 5 worst (largest DCR should have largest rank number). Show only the rank, name, DCR, cost to attend, median debt at graduation, and median earnings 10 years after enrollment.</p></li>
 <li><p>What is American University’s rank and DCR? Show only the rank, name, DCR, cost to attend, median debt at graduation, and median earnings 10 years after enrollment.</p></li>
