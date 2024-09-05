@@ -32,11 +32,11 @@ library(tidyverse)
 
 # College Scorecard
 
-The data folder contains `college_scorecard_extract_2024-06-13_UG.csv`, a *subset* of data in the [College Scorecard](https://collegescorecard.ed.gov/data/) as of June 13, 2024. This data set contains information on undergraduate college cohorts in the United States. The data dictionary is in the `data` folder. The variables include: (see HTML file)
+The data folder contains `college_scorecard_extract_2024-06-13_413.csv`, a *subset* of data in the [College Scorecard](https://collegescorecard.ed.gov/data/) as of June 13, 2024. This data set contains information on undergraduate college cohorts in the United States. The data dictionary is in the `data` folder. The variables include: (see HTML file)
 
 1.  Load the data.
 
-a.  Load `college_scorecard_extract_2023-04-25_UG.csv` (in the `data` directory) using one call to a {readr} function with a relative path and save the resulting tibble.
+a.  Load `college_scorecard_extract_2024-06-13_413.csv` (in the `data` directory) using one call to a {readr} function with a relative path and save the resulting tibble.
     -   Note, this data uses "NULL" for some missing values. Use an argument of the {readr} function to convert "NULL" to `NA` during the loading of the data. Do not not suppress messages or warnings.
 
 b.  Use `glimpse()` to examine the data.
@@ -48,7 +48,7 @@ a.  Which ones are they?
 b.  Look at the data. Why were these columns read in as type character instead of double?
 
 
-3.  Reload the data with a {readr} function and use an argument to convert the offending entries to `NA` so the variables are automatically read in as type double. You should have 42 variables of type double.
+3.  Reload the data with a {readr} function and use an argument to convert the offending entries to `NA` so the variables are automatically read in as type double. You should have 42 variables of class double.
 
 
 4.  How is average faculty salary associated with the median earnings of working students ten years after initial enrollment?
@@ -84,7 +84,7 @@ a.  Create the following plot as close as you can.
 
 b.  Pose the question you think the plot might answer and interpret the plot to answer the question. What are the implications for school administrators or for applicants?
 
-c.  Show the `INSTNM`, `INSTURL`, `RELAFFIL`, and `UGDS_WOMEN` for only schools with either 0% or 100% for `UGDS_WOMEN` sorted by ascending `UGDS_WOMEN` then `INSTNM`. There should be 39 schools. What do you notice?
+c.  Filter to only ICLEVEL 1 schools with non `NA` values for `MD_EARN_WNE_P10` and `UGDS_WOMEN`. Show the `INSTNM`, `INSTURL`, `RELAFFIL`, and `UGDS_WOMEN` for only schools with either 0% or 100% for `UGDS_WOMEN` sorted by ascending `UGDS_WOMEN` then `INSTNM`. There should be 39 schools. What do you notice?
     -   Note: `RELAFFIL` of 30 is Roman Catholic, 66 is Presbyterian Church (USA), 71 is United Methodist, and 80 is Jewish.
 
 d.  To minimize extreme value effects, filter to choose schools where `UGDS_WOMEN` is greater than 10% and less than 90% and reproduce the plot.
