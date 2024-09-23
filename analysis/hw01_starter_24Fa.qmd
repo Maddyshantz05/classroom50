@@ -1,0 +1,253 @@
+---
+title: "DATA-413/613 HW 01"
+author: "Your Name"
+number-sections: true
+format: html
+embed-resources: true
+---
+
+# Admin Elements {.unnumbered}
+
+Review the Syllabus on Canvas and answer the following questions:
+
+I, *enter your name* have:
+
+1.  Ensured my Canvas Profile has a photo of me (head and shoulders).
+2.  Reviewed the syllabus and the associated policies on the following date: ***fill in the date***\_\_\_\_\_\_\_\_\_\_.
+3.  Reviewed the American University policies on academic integrity and I agree to comply with them and the additional guidance in the syllabus for this course.
+4. Reviewed the General Instructions for Assignments on the following date: ***fill in the date***\_\_\_\_\_\_\_\_\_\_.
+5.  Confirmed my information in the Student Info spreadsheet on Canvas Collaborations is correct.
+6. Updated my version of R and RStudio and the {tidyverse} packages for this course.
+
+# Analysis Elements {.unnumbered}
+
+0. Load the {tidyverse} and use functions from {tidyverse} when possible.
+
+# College Scorecard
+
+The data folder contains `college_scorecard_extract_2024-06-13_413.csv`, a *subset* of data in the [College Scorecard](https://collegescorecard.ed.gov/data/) as of June 13, 2024. This data set contains information on undergraduate college cohorts in the United States. The data dictionary is in the `data` folder. The variables include:
+
+-   `ADM_RATE`: The Admission Rate
+-   `AGE_ENTRY`: Average age of entry
+-   `AVGFACSAL`: Average faculty salary
+-   `CITY`: City
+-   `CONTROL`: Ownership-Public or Private: 1='Public Institution', 2='Private nonprofit Institution', 3='Private for-profit institution', -3='not available';
+-   `COSTT4_A`: Average cost of attendance (academic year institutions)
+-   `ENDOWBEGIN`: Endowment at the beginning of the fiscal year.
+-   `FEMALE`: Percentage of female students
+-   `FIRSTGEN`: Share of first-generation students
+-   `GRAD_DEBT_MDN`: The median debt for students who have completed
+-   `HBCU`: Flag for Historically Black College and University, 1 is HBCU-Yes
+-   `HSI`: Flag for Hispanic-serving institution
+-   `ICLEVEL`: Level of institution (1 = 4-year, 2 = 2-year, 3 = less than 2-year).
+-   `INSTNM`: Institution name
+-   `INSTURL`: URL for institution's homepage
+-   `MD_EARN_WNE_P10`: Median earnings of students working and not enrolled 10 years after entry.
+-   `NANTI`: Flag for Native American non-tribal institution
+-   `OPEID`: Identifier for the colleges. A “main campus” has an 8-digit OPE ID that starts with 0 and ends with 00; digits 2 through 6 are referred to as the “root.” Separate reporting entities in IPEDS are referred to as “institutions” and may include Branch campuses and additional locations which share the root.
+-   `PCIP14`: Percentage of degrees awarded in Education.
+-   `PCIP14`: Percentage of degrees awarded in Engineering.
+-   `PCIP27`: Percentage of degrees awarded in Mathematics And Statistics.
+-   `PCIP52`: Percentage of degrees awarded in Business, Management, Marketing, And Related Support Services.
+-   `PCT_ASIAN`: Percent of the population from students' zip codes that is Asian, via Census data
+-   `PCT_BLACK`: Percent of the population from students' zip codes that is Black, via Census data
+-   `PCT_HISPANIC`: Percent of the population from students' zip codes that is Black, via Census data
+-   `PCT_WHITE`: Percent of the population from students' zip codes that is White, via Census data
+-   `PCTPELL`: Percentage of undergraduates who receive a Pell Grant
+-   `PFTFAC`: Proportion of faculty that is full-time
+-   `PREDDEG`: Predominant undergraduate degree awarded. 0 Not classified, 1 Predominantly certificate-degree granting, 2 Predominantly associate's-degree granting, 3 Predominantly bachelor's-degree granting, 4 Entirely graduate-degree granting"
+-   `RELAFFIL`: Religious affiliation of the institution
+-   `SAT_AVE`: Average SAT equivalent score of students admitted.
+-   `SCH_DEG`: Predominant degree awarded (recoded 0s and 4s)
+-   `STABBR`: State postal code
+-   `UGDS`: Enrollment of undergraduate certificate/degree-seeking students
+-   `UGDS_MEN`: Percent of male undergraduates
+-   `UGDS_WOMEN`: Percent of female undergraduates
+-   Total share of enrollment of undergraduate degree-seeking students who are
+    -   `UGDS_2MOR`: Two or more races
+    -   `UGDS_AIAN`: American Indian/Alaska Native
+    -   `UGDS_API`: Asian/Pacific Islander. All `NA` so not used.
+    -   `UGDS_ASIAN`: Asian
+    -   `UGDS_BLACK`: Black
+    -   `UGDS_BLACKNH`: Black non-Hispanic. All `NA` so not used.
+    -   `UGDS_HISP`: Hispanic undergraduates
+    -   `UGDS_NHPI`: Native Hawaiian/Pacific Islander
+    -   `UGDS_UNKN`: Unknown
+    -   `UGDS_NRA`: Non-resident Alien
+    -   `UGDS_WHITE`: White
+    -   `UGDS_WHITENH`: White non-Hispanic. All `NA` so not used.
+-   `UNITID`: Identifier for the colleges.
+-   `ZIP`: Zip Code
+-   `LATITUDE`: Location Latitude
+-   `LONGITUDE`: Location Longitude
+-   `DATE`: Date of the data set
+
+1.  Load the data.
+
+a.  Load `college_scorecard_extract_2024-06-13_413.csv` (in the `data` directory) using one call to a {readr} function with a relative path and save the resulting tibble.
+    -   Note, this data uses "NULL" for some missing values. Use an argument of the {readr} function to convert "NULL" to `NA` during the loading of the data. Do not not suppress messages or warnings.
+
+b.  Use `glimpse()` to examine the data.
+
+2.  If you used the default settings for reading in the data, multiple variables are probably type/class character when the data suggests they should be numeric.
+
+a.  Which ones are they?
+b.  Look at the data. Why were these columns read in as type character instead of double?
+
+3.  Reload the data with a {readr} function and use an argument to convert the offending entries to `NA` so the variables are automatically read in as type double. The message from reading in the data should show 42 variables of class double.
+
+4.  How is average faculty salary associated with the median earnings of working students ten years after initial enrollment? Answer that question in the following steps.
+
+a.  Use {ggplot2} to create an appropriate plot to assess for a relationship (with `AVGFACSAL` as the explanatory X variable). Use a {ggplot2} function argument to reduce over-plotting . Add the default smoother with `se = FALSE`. Facet on `ICLEVEL`.
+b.  Interpret the plots about the potential relationships.
+c.  Why did `geom_smooth()` chose the `mgcv::gam()` smoothing method instead of the default `stats::loess()`?
+d.  Why is there no `ICLEVEL` 3 plot, or, if there is a plot, why is there no data in the `ICLEVEL` 3 plot?
+e.  Use `lm()` to run a linear model of the relationship **for only those schools with ICLEVEL 1** and save the results.
+f.  Use `summary()` on the results.
+g.  Interpret the results of the model based on the coefficient for `AVGFACSAL` and the model $p$-value and $r$-squared value.
+h.  Given the $r$-squared value, what do you recommend to try to better predict average earnings of working students ten years after initial enrollment at ICLEVEL 1 schools?
+
+5.  How is the level of the institution associated with the median earnings of students ten years after enrollment? Answer that question in the following steps.
+
+a.  Reproduce the following plot to explore this relationship. 
+- Use `ggthemes::theme_fivethirtyeight()`. 
+- Use a {knitr} chunk option to set the figure width at 7.
+
+b.  Interpret the plot to answer the question.
+
+c.  Use `aov()` to test if all of the institution levels have the same true mean of logged median earnings of working students ten years after enrollment.
+
+d.  Use `broom::tidy()` to show the results. Interpret the results
+
+e.  Why would we look at the log of mean earnings instead of the un-logged values?
+
+6.  What is the relationship between Median Earnings and the Percentage of Women Undergraduates for `ICLEVEL` 1 schools. Answer that question in the following steps.
+
+a.  Create the following plot as close as you can.
+
+b.  Pose the question you think the plot might answer and *interpret the plot to answer the question*. What are the implications for school administrators or for applicants?
+
+c.  Filter to only `ICLEVEL` 1 schools with non `NA` values for `MD_EARN_WNE_P10` and `UGDS_WOMEN`. 
+- Show only `INSTNM`, `INSTURL`, `RELAFFIL`, and `UGDS_WOMEN`  with either 0% or 100% for `UGDS_WOMEN` sorted by ascending `UGDS_WOMEN` then `INSTNM`. There should be 39 schools. 
+- Look at all the rows. What do you notice?
+    -   Note: `RELAFFIL` of 30 is Roman Catholic, 66 is Presbyterian Church (USA), 71 is United Methodist, and 80 is Jewish.
+
+d.  To minimize extreme value effects, filter to choose `ICLEVEL` 1 schools where `UGDS_WOMEN` is greater than 10% and less than 90% and reproduce the plot.
+    -   Extra Credit: Add points and labels for American University (colored red) and the Massachusetts Institute of Technology (colored green) such that the points will automatically adjust with new data.
+
+e.  What do you notice? What questions does this plot raise for you?
+
+f.  Start with the data frame and using or three pipes, with no intermediate variables, filter to choose `ICLEVEL` 1 schools where `UGDS_WOMEN` is greater than 10% and less than 90%, use `lm()` to run a linear model, and use `summary()` on the results.
+
+g.   Interpret the results compared to the plot using the sign of the coefficient for `UGDS_WOMEN`, and the model $p$-value and  R-squared.
+
+7.  What is the relationship among Median Earnings and Race/Ethnicity? Answer that question in the following steps.
+
+a.  Create the following plot as close as you can. 
+    - Hint: consider what shape the data should be in to generate the plot. 
+    - Use `geom_vline(xintercept = .36, color = "red", lty = 3)` to add the vertical line  representing the maximum 90^th^ percentile across all categories but White.
+
+b.  Pose the question you think the plot might answer and interpret the plot to answer the question.
+
+c.  What are the ethical implications of using either the linear smoother or the non-linear smoother in these plots to "prove a point"? Which would you recommend and why?
+
+7.  How do colleges rank based on their ration of Student Debt at graduation to the Annual Cost to Attend (Debt/Cost Ratio (DCR)). Answer that question in the following steps.
+
+a.  Filter the data to only `ICLEVEL` 1 schools with no `NA`s for `COSTT4_A` or `GRAD_DEBT_MDN`. Remove any satellite campuses using `filter(str_detect(OPEID, "......00"))`. That should leave 1,701 rows.
+
+b.  Add a variable called `DCR` based on the ratio of median debt at graduation to the Average cost of attendance (academic year institutions) rounded to 2 decimal places.
+
+c.  Use a {dplyr} integer ranking function to compute a ranking using `DCR`. 
+- Break any ties using the smallest value and *leaving a gap to the next untied DCR* such that if two schools are tied for 4th, they are each ranked 4 and the next school is 6. This is similar to many sports rankings.
+
+d.  Identify the top 5 best (lowest DCR should be rank value 1) and the bottom 5 worst (largest DCR should have largest rank number). Show only the rank, name, DCR, cost to attend, median debt at graduation, and median earnings 10 years after enrollment.
+
+e.  What is American University's rank and DCR? Show only the rank, name, DCR, cost to attend, median debt at graduation, and median earnings 10 years after enrollment.
+
+f.  Extra Credit: Reproduce the following plot so the *AU line and number of institutions automatically adjust as new data is entered*. Use `ggthemes::clean()`.
+
+
+# World Bank Data
+
+The World Bank provides loans to countries with the goal of reducing poverty. The data frames in the data folder were taken from the public data repositories of the [World Bank Group DataBank](https://databank.worldbank.org/home). The fertility, life expectancy, and population data are from its [World Development Indicators (WDI)](https://databank.worldbank.org/source/world-development-indicators) as of 1 August 2024.
+
+-   `wb_country_income_classification_2023.csv`: Contains information on the countries in the data set. Also includes totals for the regions (sets of countries) and the world. Source is [World Bank Country and Lending Groups](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups). The variables are:
+    -   `Economy`: The full name of the country or region.
+    -   `Code`: A three-letter code for the country. Note not all rows are countries; There are rows for the regions and for the world.
+    -   `Region`: The region of the country. Note: The `Economy` variable includes observations for defined groups of countries, such as regions, and for the world. These have the value `NA` for `Region`.
+    -   `Income Group`: Either `"High income"`, `"Upper middle income"`, `"Lower middle income"`, or `"Low income"`.
+    -   `Lending Category`: IDA (International Development Association): Low-income countries eligible for concessional financing. Blend: Countries eligible for both IDA and International Bank for Reconstruction and Development (IBRD) assistance. IBRD (International Bank for Reconstruction and Development): Middle-income and creditworthy low-income countries.
+
+-   `wb_fertility_2022.csv`: WDI data contains the fertility rate information for each country, each region, and the world for each year.
+    -   For the years `1960` to `2022`, the values in the cells represent the fertility rate in total births per woman for that year.
+    -   Total fertility rate represents the number of children that would be born to a woman if she were to live to the end of her childbearing years and bear children in accordance with age-specific fertility rates of the specified year.
+
+-   `wb_life_exp_2022.csv`: WDI data contains the life expectancy information for each country, each region, and the world for each year.
+    -   For the years `1960` to `2022`, the values in the cells represent life expectancy at birth in years for the given year.
+    -   Life expectancy at birth indicates the number of years a newborn infant would live if prevailing patterns of mortality at the time of its birth were to stay the same throughout its life.
+
+-   `wb_pop_2023.csv`: WDI data contains the population information for each country, each region, and the world for the year.
+    -   For the years`1960` to `2023`, the values in the cells represent the total population in number of people for the given year.
+    -   Total population is based on the *de facto* definition of population, which counts all residents regardless of legal status or citizenship. The values shown are mid-year estimates.
+
+1.  Use a relative path and a {readr} function to load each of these four files into its own tibble. *Be sure to look at the data after loading to ensure it loaded as expected, without problems, and fix any problems using {readr} function arguments.* 
+    - Ensure there is a maximum of 267 rows for the country data and a maximum of 266 rows for each of the WDI data files.
+    - Note: `wb_country_income_classification_2023` has a row of all `NA`s between the countries and the collective economies such as regions. The argument `skip_empty_rows` defaults to `TRUE` but, since there are commas in the file, the row is not counted as "empty."
+    - Note: Some countries have `NA` for missing data for the early years but have values in the later years which is not a problem. 
+
+2. Use `anti_join()` to show which codes are in the country data but not in the population data and which country codes are in population data but not in the country data.  Note: Per the general instructions, you cannot rename variables.
+
+3.  These data are messy. The observational units in `fert`, `life`, and `pop` are locations in space-time (e.g., Aruba in 2020). Recall that "tidy" data should have one observational unit per row.
+
+-   Tidy and clean each data frame to have only four variables by using only two main function calls for each data frame to accomplish the following:
+    1.  Remove the `Series Name` and `Series Code` columns.
+    2.  Use a {tidyr} function to tidy and clean the tibble
+        - Use an argument of the function and a {readr} function ensure the variable for `year` is a numeric. Recall, {readr} parsing functions can "fix" many parsing errors automatically. There is no need to use a `mutate()` function.
+    3. Given the many `NA`s, remove them using an argument of the {tidyr} function.
+    4. Save each tidy tibble to a new name. 
+- You should have four columns in each with 16,124, 16,137, and 16,930 rows based on the different numbers of `NA`s in the original tibbles. The `INX` country code had all `NA`s for each year so it should be gone as well.
+- Show a random sample of 10 rows from each data frame.
+
+4.  Combine tibbles.
+
+a. Using a {dplyr} join function, *join* the three WDI tidy tibbles you just created into a single tibble. Start with the population data and then join fertility data and then join the life_expectancy data. 
+    - It should have six columns and 16,930 rows.
+b. Then use a {dplyr} join function to add the data from the country tibble in a way that does not add any countries from the country data that have no data in the joined tibble from part a. Save the resulting tibble to a new name and show the structure of the saved tibble. `Use glimpse()` on the tibble.
+    -   The new tibble should now have 10 columns and 16,930 rows.
+    -   It should include the fertility rate, population, and life expectancy for each year as well as the `Economy`,`Region`, `IncomeGroup`, and `Lending Category`.
+
+
+5. Show just the distinct `Country Name` and `Economy` for the countries (rows with a non-`NA` value for `Region`) where the values in `Country Name` and `Economy` do not match each other. There should be five. What do you notice about they do not match?
+
+
+6.  What is the relationship between Fertility vs Life Expectancy over Time by Country and Region? Answer that question in the following steps.
+
+a. Make a single scatterplot with the following attributes:
+    1.  Use `drop_na()` to remove all `NA`s *for the variables of interest* and show fertility rate (Y) vs life expectancy (X) for Countries (i.e., rows where `Region` is not ``NA`).
+    2.  Color-code by `Region` and indicate the country population by size.
+    3.  Include only the years 1960, 1980, 2000, and 2020.
+    4.  Facet by these years.
+    5.  Use `scale_color_viridis_d()`.
+- Your final plot should look like the below (Each element of the plot is graded).
+
+b.  Interpret the plot in one sentence that addresses each variable.
+
+
+7.  What are the fastest growing regions in terms of Regional Population? Answer that question in the following steps.
+
+a.  Use only Countries (`Region` is not `NA`) to calculate the total population for each region for each year and pipe the result directly into part b.
+b.  Make a line plot of the calculated total regional population (Y) versus year (X), color-coding by region and using a *log scale* for Y. 
+    - Use (`ggthemes::scale_color_colorblind`).
+    - Your final plot should look like the below 
+
+c.  Interpret the plot in one sentence to identify the two fastest-growing regions.
+
+8. What is the distribution of percentage growth in population for the countries in each region from 1960 to 2023?(Extra Credit)
+
+a. Make a plot as close as possible to the one below with the percentage population growth for the countries from 1960 to 2023 (the growth from 1960 to 2023 compared to 1960) with the following attributes.
+    1.  Use code to automatically order the Regions on the $y$-axis in **increasing** order of Region's total 1960 population.
+    2.  For any countries with negative growth, set it to .001.
+    3.  Add a red line at 100%.
+
+b.  Interpret the plot in one sentence to compare the percentage growth with the previous plot.
+
