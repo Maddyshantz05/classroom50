@@ -1,0 +1,286 @@
+---
+title: "DATA-413/613 HW 01"
+author: "Your Name"
+date: today
+number-sections: true
+embed-resources: true
+format:
+  html:
+    theme:
+      light: [cerulean]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  fig.align = "center",
+  fig.height = 5,
+  fig.width = 6.5
+)
+```
+
+# Specific Instructions {.unnumbered}
+
+See the HTML file
+
+# Admin Elements {.unnumbered}
+
+Review the Syllabus on Canvas and answer the following questions:
+
+I, *enter your name* have:
+
+1.  Ensured my Canvas Profile has a photo of me (head and shoulders).
+2.  Reviewed the syllabus and the associated policies on the following date: ***fill in the date***\_\_\_\_\_\_\_\_\_\_.
+3.  Reviewed the American University policies on academic integrity and I agree to comply with them and the additional guidance in the syllabus for this course.
+4. Reviewed the General Instructions for Assignments on the following date: ***fill in the date***\_\_\_\_\_\_\_\_\_\_.
+5.  Confirmed my information in the Student Info spreadsheet on Canvas Collaborations is correct.
+6. Updated my version of R, RStudio (or Positron) and the {tidyverse} packages for this course per [Appendix A](https://rressler.quarto.pub/data-413-613/zapp_install_languages_quarto_ides.html) of the online lecture notes.
+
+# Analysis Elements {.unnumbered}
+
+0. Load the {tidyverse} and use functions from {tidyverse} when appropriate.
+
+```{r}
+library(tidyverse)
+library(here)
+```
+
+# College Scorecard
+
+The data folder contains `college_scorecard_extract_2025-11-17_413.csv`, a *subset* of data in the [College Scorecard](https://collegescorecard.ed.gov/data/) as of November 17, 2025. This data set contains information on undergraduate college cohorts in the United States. The data dictionary is in the `data` folder. The variables include: See the HTML file.
+
+
+**1.**  Load the data.
+
+a.  Load `college_scorecard_extract_2025-11-17_413.csv` (in the `data` directory) *using one call to a {readr} function with a relative path* and save the resulting tibble.
+    -  Do not not suppress messages or warnings.
+
+b.  Use `glimpse()` to examine the data.
+
+```{r}
+#| label: read_college_data
+
+```
+
+**2.**  If you used the default settings for reading in the data, three variables are class character when the data suggests they should be numeric.
+
+a.  Identify the misidentified columns.\
+b.  **Look at the data that was imported**, at least the first 250 rows. Look at the help for `read_csv()`. Why did `read_csv()` interpret these columns as type character instead of double and not the rows with "NA" in them?
+
+
+
+**3.**  Reload the data with a {readr} function and *use an argument of that function* to convert all offending entries to `NA` so the variables are automatically read in as type double. The message from reading in the data should show 36 variables of class double.
+
+```{r}
+
+```
+
+**4.**  How is average faculty salary associated with the median earnings of working students ten years after initial enrollment? Create the plot per the steps in part a, then answer parts b, c, and d as text.
+
+a. Remove the `NA` values for just the variables of interest and use {ggplot2} to create a scatter plot plot to assess for a relationship (with `AVGFACSAL` as the explanatory X variable). 
+  - Use an argument of `geom_point()` to reduce over-plotting by decreasing opacity of the points. 
+  - Add the default smoother with `se = FALSE`. 
+  - Facet on `ICLEVEL`.
+
+```{r}
+#| label: fig-fac-salary-v-student-earnings
+
+```
+
+b.  Interpret the plots about the potential relationships.
+c.  Why did `geom_smooth()` chose the `mgcv::gam()` smoothing method instead of the default `stats::loess()`?
+d.  Why is there no `ICLEVEL` 3 plot, or, if there is a plot, why is there no data in the `ICLEVEL` 3 plot?
+
+
+
+Now answer parts e though h.
+
+e.  Use `lm()` to run a linear model of the relationship **for only those schools with ICLEVEL 1** and save the results.
+f.  Use `summary()` on the results.
+
+```{r}
+
+```
+
+g.  Interpret the results of the model based on the coefficient for `AVGFACSAL` and the model $p$-value and adjusted $r$-squared value.
+h.  Given the adjusted $r$-squared value, what do you recommend to try to better predict average earnings of working students ten years after initial enrollment at ICLEVEL 1 schools?
+
+
+
+**5.**  How is the level of the institution associated with the median earnings of students ten years after enrollment?
+
+a.  Reproduce the following plot to explore this relationship. 
+- Use `ggthemes::theme_fivethirtyeight()`. 
+- Use a {knitr} code chunk option to set the figure width at 6. <https://quarto.org/docs/computations/execution-options.html#figure-options>
+
+```{r}
+#| label: earnings-by-ICLEVEL
+
+```
+
+
+
+b.  Interpret the plot to answer the question.
+
+
+
+c.  Use `aov()` to test if all of the institution levels have the same true mean of logged median earnings of working students ten years after enrollment.
+
+d.  Use `broom::tidy()` to show the results. *Interpret the results.*
+
+```{r}
+
+```
+
+
+e.  Why would we look at the log of mean earnings instead of the un-logged values?
+
+
+
+**6.**  What is the relationship among Median Earnings and Total share of enrollment by Race/Ethnicity? Answer that question in the following steps.
+
+a.  Create the following plot as close as you can. 
+    - Hint: consider what shape the data should be in to generate the plot. 
+    - Use `geom_vline(xintercept = .38, color = "red", lty = 3)` to add the vertical line representing the maximum 90^th^ percentile across all categories but White.
+
+```{r}
+#| label: earn-pct-race
+
+```
+
+
+b.  Pose the question you think the plot might answer and interpret the plot to answer the question about the relationship among Median Earnings and Total share of enrollment by Race/Ethnicity to include the meaning of the red dotted line.
+
+
+c.  What are the ethical implications of using either the linear smoother or the non-linear smoother in these plots to "prove a point"? Which would you recommend and why?
+
+
+**7.**  How do colleges rank based on their ratio of Student Debt at graduation to the Annual Cost to Attend. Call it the Debt/Cost Ratio (DCR). Answer the question in the following steps.
+
+a.  Filter the data to only `ICLEVEL` 1 schools with no `NA`s for `COSTT4_A` or `GRAD_DEBT_MDN`. 
+- Remove any satellite campuses using `filter(str_detect(OPEID, "......00"))`. That should leave 1,678 rows.
+
+b.  Add a variable called `DCR` based on the ratio of median debt at graduation to the Average cost of attendance (academic year institutions) which is then rounded to 2 decimal places.
+
+c.  Use a {dplyr} integer ranking function to compute a ranking based on `DCR`. 
+- Break any ties using the smallest value and *leaving a gap to the next untied DCR* such that if two schools are tied for 4^th^, they are each ranked 4^th^ and the next school is ranked 6^th^. This is similar to many sports rankings.
+
+d.  Identify the just top 5 best schools (lowest DCR should be rank value 1). Then identify the just he bottom 5 worst schools (largest DCR should have largest rank number). 
+- Show only the rank, name, DCR, cost to attend, median debt at graduation, and the median earnings 10 years after enrollment.
+
+```{r}
+
+```
+
+e.  What is American University's rank and DCR? Show only the rank, name, DCR, cost to attend, median debt at graduation, and median earnings 10 years after enrollment.
+
+```{r}
+
+```
+
+
+
+f.  Extra Credit: Reproduce the following plot so the *AU line and number of institutions automatically adjust as new data is entered*. Use `ggthemes::theme_clean()`.
+
+*You can use AI tools to help on this extra credit problem. If you do, you must cite all the tools and include your strategy for solving the problem, the text from your first prompt, and how you validated the code and result were correct.*
+
+```{r}
+
+```
+
+# World Bank Data
+
+See HTML file
+
+**1.**  Use a relative path and {readxl) or {readr} functions to load each of these files into its own tibble so we only have the data for individual countries, not regions or the world. 
+
+- Use an argument of the function that reads the data to ensure there is a maximum of 219 rows for the country data and a maximum of 651 rows for the WDI data. 
+  - Note: the two packages use the same name for the argument but readr functions do *not* count header rows as they check for them first, before reading the data and read_xlsx functions do count them as they only look for header rows *after* reading in the data.
+- Note: **Some countries have `NA` or ".." for missing data.**
+- *Be sure to look at the data after loading to ensure it loaded as expected, without problems (e.g., numeric data mistakenly being read in as character), and fix any problems using function arguments.* 
+
+
+Use `glimpse()` to show a maximum of 10 columns of data for each tibble.
+
+```{r}
+library(readxl)
+library(ggthemes)
+```
+
+```{r}
+#| label: load-world-bank-data
+
+```
+
+**2.** Use `anti_join()` to show which codes are *in the country data but not in the WDI data*.
+- Then use `anti_join()` to show which country codes are *in WDI data but not in the country data*.  
+- Note: Per the general instructions, you cannot rename variables.
+
+```{r}
+
+```
+
+
+**3.**  The WDI data are messy. Recall that "tidy" data should have one observational unit per row. 
+
+- Develop a strategy for using *only three main functions and no intermediate variables* to reshape the data so it is tidy with only six variables/columns. Save the tidy data frame with a new name. 
+
+Consider the following
+
+- Remove the `Series Code` column.
+- Use a {tidyr} function to reshape the year columns into rows and rename them while removing extra `NA`s
+    - Use an argument of the function and a {readr} function ensure the variable for `year` is a numeric. Do not use a `mutate()` function.
+      - Recall, {readr} parsing functions can "fix" many parsing errors automatically. 
+    - Given the many `NA`s in the data, remove them as part of the reshaping using an argument of the {tidyr} function.
+- Use a {tidyr} function to reshape the `Series Name` rows into columns.
+
+You should have 14,075 rows and 6 columns of which the last 4 are all type double.
+
+- Now shorten the names of the indicator columns. Convert to snake case, e.g., lower case with "_" not " ".
+- Use `set_seed(123)` and then show a random sample of 10 rows.
+
+```{r}
+
+```
+
+**4.**  Combine tibbles.
+
+Using a {dplyr} `left-join()`, add the data *from* the WB country data *to* the tidy tibble you just created and save with a new name.
+
+-   The new tibble should now have 14,075 rows and 9 columns.
+-   It should include the fertility rate, population, and life expectancy for each year as well as the `Region`, `IncomeGroup`, and `Lending Category`.
+
+```{r}
+
+```
+
+**5.**  What is the relationship between Fertility vs Life Expectancy over Time by Country and Region? Answer that question in the following steps.
+
+a. Make a single scatterplot with the following attributes:
+    1.  Use `drop_na()` to remove all `NA`s *just for the variables of interest*. 
+    2.  Include only the years 1960, 1980, 2000, and 2020.
+    3.  Show fertility rate (Y) vs life expectancy (X) for Countries (i.e., rows where `Region` is not ``NA`).
+    4.  Color-code by `Region` and indicate the country population by size.
+    5.  Facet by these years.
+    6.  Use `scale_color_viridis_d()`.
+- Your final plot should look like the below (Each element of the plot is graded).
+
+```{r}
+
+```
+
+b.  Interpret the plot in one sentence that *addresses each variable*.
+
+
+
+**6.** What is the distribution of percentage growth in population for the countries in each region from 1960 to 20234. (**Extra Credit**)
+
+a. Make a plot as close as possible to the one below. 
+  - Plot the distributions of the percentage population growth for the countries in each region from 1960 to 2024 (the change in population from 1960 to 2024 compared to 1960) with the following attributes.
+    1.  Use code to automatically order the Regions on the $y$-axis in **increasing** order of *Region's* total 1960 population.
+    2.  For any countries with negative growth, set it to .001.
+    3.  Add a red line at 100%.
+
+*You can use AI tools to help on this extra credit problem. If you do, you must cite all the tools and include your strategy for solving the problem, the text from your first prompt, and how you validated the code and result were correct.*
+
+
+b.  Interpret the plot in one sentence.
