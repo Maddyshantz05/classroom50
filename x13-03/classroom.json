@@ -1,0 +1,25 @@
+{
+  "schema": "classroom50/classroom/v1",
+  "name": "DATA-413-613 section 03 Fall 2026",
+  "short_name": "x13-03",
+  "term": "26F",
+  "org": "DATA-413-613-26F",
+  "team": {
+    "id": 19246715,
+    "slug": "classroom50-x13-03"
+  },
+  "teams": {
+    "teacher": {
+      "id": 19246716,
+      "slug": "classroom50-x13-03-teacher"
+    },
+    "hta": {
+      "id": 19246717,
+      "slug": "classroom50-x13-03-hta"
+    },
+    "ta": {
+      "id": 19246718,
+      "slug": "classroom50-x13-03-ta"
+    }
+  }
+}
